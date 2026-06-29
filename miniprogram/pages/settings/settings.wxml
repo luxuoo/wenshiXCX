@@ -1,0 +1,104 @@
+<!--settings.wxml-->
+<scroll-view class="page" scroll-y enhanced show-scrollbar="{{false}}">
+
+  <view class="sec-title">
+    <image class="sec-icon" src="/images/ic-station.png" mode="aspectFit"></image>
+    <text>设备</text>
+  </view>
+  <view class="card">
+    <view class="row">
+      <text class="lbl">设备ID</text>
+      <input class="inp" value="{{did}}" bindinput="onDidInput" placeholder="如 gh01"/>
+    </view>
+    <view class="row"><text class="lbl">服务器</text><text class="val">123.207.45.73:8111</text></view>
+    <view class="row"><text class="lbl">MQTT</text><text class="val">123.207.45.73:1883</text></view>
+  </view>
+
+  <view class="sec-title">
+    <image class="sec-icon" src="/images/ic-gear.png" mode="aspectFit"></image>
+    <text>阈值</text>
+    <text class="hint">（自动模式生效）</text>
+  </view>
+  <view class="card">
+    <view class="row">
+      <view class="lbl-wrap"><image class="lbl-icon" src="/images/ic-temp.png" mode="aspectFit"></image><text class="lbl">温度上限</text></view>
+      <view class="ctrl">
+        <view class="cbtn" bindtap="onTh" data-k="TH_TEMP" data-d="-1">-</view>
+        <text class="cval">{{th.TH_TEMP}}°C</text>
+        <view class="cbtn" bindtap="onTh" data-k="TH_TEMP" data-d="1">+</view>
+      </view>
+    </view>
+    <view class="row">
+      <view class="lbl-wrap"><image class="lbl-icon" src="/images/ic-humi.png" mode="aspectFit"></image><text class="lbl">湿度下限</text></view>
+      <view class="ctrl">
+        <view class="cbtn" bindtap="onTh" data-k="TH_HUMI" data-d="-1">-</view>
+        <text class="cval">{{th.TH_HUMI}}%</text>
+        <view class="cbtn" bindtap="onTh" data-k="TH_HUMI" data-d="1">+</view>
+      </view>
+    </view>
+    <view class="row">
+      <view class="lbl-wrap"><image class="lbl-icon" src="/images/ic-solar.png" mode="aspectFit"></image><text class="lbl">光照下限</text></view>
+      <view class="ctrl">
+        <view class="cbtn" bindtap="onTh" data-k="TH_LUX" data-d="-100">-</view>
+        <text class="cval">{{th.TH_LUX}} lux</text>
+        <view class="cbtn" bindtap="onTh" data-k="TH_LUX" data-d="100">+</view>
+      </view>
+    </view>
+    <view class="row">
+      <view class="lbl-wrap"><image class="lbl-icon" src="/images/ic-water.png" mode="aspectFit"></image><text class="lbl">水位下限</text></view>
+      <view class="ctrl">
+        <view class="cbtn" bindtap="onTh" data-k="TH_WATER" data-d="-5">-</view>
+        <text class="cval">{{th.TH_WATER}}%</text>
+        <view class="cbtn" bindtap="onTh" data-k="TH_WATER" data-d="5">+</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="save-btn" bindtap="onSave">
+    <image class="btn-icon" src="/images/ic-shield.png" mode="aspectFit"></image>
+    <text>保存阈值到设备</text>
+  </view>
+
+  <view class="sec-title">
+    <image class="sec-icon" src="/images/ic-eco2.png" mode="aspectFit"></image>
+    <text>模式</text>
+  </view>
+  <view class="card mode-card">
+    <view class="mode-opt {{mode === 'auto' ? 'mode-sel' : ''}}" bindtap="onMode" data-m="auto">
+      <image class="mode-icon" src="/images/ic-ecology.png" mode="aspectFit"></image>
+      <text class="mode-name">自动</text>
+      <text class="mode-desc">按阈值自动控制</text>
+    </view>
+    <view class="mode-opt {{mode === 'manual' ? 'mode-sel' : ''}}" bindtap="onMode" data-m="manual">
+      <image class="mode-icon" src="/images/ic-energy.png" mode="aspectFit"></image>
+      <text class="mode-name">手动</text>
+      <text class="mode-desc">全部手动控制</text>
+    </view>
+  </view>
+
+  <view class="sec-title">
+    <image class="sec-icon" src="/images/ic-plug.png" mode="aspectFit"></image>
+    <text>其他</text>
+  </view>
+  <view class="card">
+    <view class="act-row" bindtap="onTest">
+      <image class="act-icon" src="/images/ic-station.png" mode="aspectFit"></image>
+      <text class="act-txt">测试连接</text><text class="arr">›</text>
+    </view>
+    <view class="act-row" bindtap="onClear">
+      <image class="act-icon" src="/images/ic-recycle.png" mode="aspectFit"></image>
+      <text class="act-txt">清除缓存</text><text class="arr">›</text>
+    </view>
+    <view class="act-row" bindtap="onAbout">
+      <image class="act-icon" src="/images/ic-world.png" mode="aspectFit"></image>
+      <text class="act-txt">关于</text><text class="arr">›</text>
+    </view>
+  </view>
+
+  <view class="footer">
+    <image class="footer-icon" src="/images/ic-tree.png" mode="aspectFit"></image>
+    <text>智能温室种植系统 v1.0</text>
+  </view>
+
+  <view style="height: 50rpx;"></view>
+</scroll-view>

@@ -1,0 +1,92 @@
+<!--history.wxml-->
+<scroll-view class="page" scroll-y enhanced show-scrollbar="{{false}}">
+
+  <view class="time-row">
+    <view class="time-btn {{range === 'recent' ? 't-on' : ''}}" bindtap="onRange" data-v="recent">
+      <image class="t-icon" src="/images/ic-time.png" mode="aspectFit"></image>最近
+    </view>
+    <view class="time-btn {{range === 'day' ? 't-on' : ''}}" bindtap="onRange" data-v="day">
+      <image class="t-icon" src="/images/ic-solar.png" mode="aspectFit"></image>今日
+    </view>
+    <view class="time-btn {{range === 'week' ? 't-on' : ''}}" bindtap="onRange" data-v="week">
+      <image class="t-icon" src="/images/ic-planet.png" mode="aspectFit"></image>本周
+    </view>
+  </view>
+
+  <view class="m-row">
+    <view class="m-btn {{metric === 'temp' ? 'm-on' : ''}}" bindtap="onMetric" data-v="temp">
+      <image class="m-icon" src="/images/ic-temp.png" mode="aspectFit"></image>温度
+    </view>
+    <view class="m-btn {{metric === 'humi' ? 'm-on' : ''}}" bindtap="onMetric" data-v="humi">
+      <image class="m-icon" src="/images/ic-humi.png" mode="aspectFit"></image>湿度
+    </view>
+    <view class="m-btn {{metric === 'lux' ? 'm-on' : ''}}" bindtap="onMetric" data-v="lux">
+      <image class="m-icon" src="/images/ic-solar.png" mode="aspectFit"></image>光照
+    </view>
+    <view class="m-btn {{metric === 'water' ? 'm-on' : ''}}" bindtap="onMetric" data-v="water">
+      <image class="m-icon" src="/images/ic-water.png" mode="aspectFit"></image>水位
+    </view>
+  </view>
+
+  <view class="chart-box">
+    <view class="chart-head">
+      <image class="ch-icon" src="/images/ic-energy.png" mode="aspectFit"></image>
+      {{mLabel}} · {{rangeLabel}}
+    </view>
+    <view class="chart-wrap">
+      <canvas type="2d" id="lineChart" class="chart-canvas"></canvas>
+    </view>
+    <view class="stat-row" wx:if="{{stats}}">
+      <view class="stat-it"><text class="st-label">当前</text><text class="st-val" style="color:{{mColor}}">{{stats.cur}}{{stats.u}}</text></view>
+      <view class="stat-it"><text class="st-label">最高</text><text class="st-val">{{stats.max}}{{stats.u}}</text></view>
+      <view class="stat-it"><text class="st-label">最低</text><text class="st-val">{{stats.min}}{{stats.u}}</text></view>
+      <view class="stat-it"><text class="st-label">平均</text><text class="st-val">{{stats.avg}}{{stats.u}}</text></view>
+    </view>
+  </view>
+
+  <view class="sec-title">
+    <image class="sec-icon" src="/images/ic-battery.png" mode="aspectFit"></image>
+    继电器运行占比
+  </view>
+  <view class="relay-box">
+    <view class="rl-item">
+      <image class="rl-icon" src="/images/ic-water.png" mode="aspectFit"></image>
+      <text class="rl-name">水泵</text>
+      <view class="rl-bar"><view class="rl-fill rl-pump" style="width:{{pumpPct}}%"></view></view>
+      <text class="rl-pct">{{pumpPct}}%</text>
+    </view>
+    <view class="rl-item">
+      <image class="rl-icon" src="/images/ic-bulb.png" mode="aspectFit"></image>
+      <text class="rl-name">补光</text>
+      <view class="rl-bar"><view class="rl-fill rl-light" style="width:{{lightPct}}%"></view></view>
+      <text class="rl-pct">{{lightPct}}%</text>
+    </view>
+    <view class="rl-item">
+      <image class="rl-icon" src="/images/ic-fan.png" mode="aspectFit"></image>
+      <text class="rl-name">风扇</text>
+      <view class="rl-bar"><view class="rl-fill rl-fan" style="width:{{fanPct}}%"></view></view>
+      <text class="rl-pct">{{fanPct}}%</text>
+    </view>
+  </view>
+
+  <view class="sec-title">
+    <image class="sec-icon" src="/images/ic-ecology.png" mode="aspectFit"></image>
+    数据记录 <text class="cnt">共{{table.length}}条</text>
+  </view>
+  <view class="tbl">
+    <view class="tbl-hd"><text class="c1">时间</text><text class="c2">温度</text><text class="c2">湿度</text><text class="c2">光照</text><text class="c2">水位</text></view>
+    <view class="tbl-row" wx:for="{{table}}" wx:key="id">
+      <text class="c1">{{item.t}}</text>
+      <text class="c2">{{item.temp}}°</text>
+      <text class="c2">{{item.humi}}%</text>
+      <text class="c2">{{item.luxT}}</text>
+      <text class="c2">{{item.water}}%</text>
+    </view>
+  </view>
+
+  <view wx:if="{{!table.length}}" class="empty">
+    <image class="empty-icon" src="/images/ic-eco.png" mode="aspectFit"></image>
+    <text>暂无数据</text>
+  </view>
+  <view style="height: 30rpx;"></view>
+</scroll-view>

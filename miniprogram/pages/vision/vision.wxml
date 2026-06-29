@@ -1,0 +1,74 @@
+<!--vision.wxml-->
+<scroll-view class="page" scroll-y enhanced show-scrollbar="{{false}}"
+  refresher-enabled bindrefresherrefresh="onPullRefresh" refresher-triggered="{{refreshing}}">
+
+  <view class="action-bar">
+    <view class="snap-btn" bindtap="onTriggerSnap">
+      <image class="btn-icon" src="/images/ic-science.png" mode="aspectFit"></image>
+      <text>立即拍照</text>
+    </view>
+    <view class="refresh-btn" bindtap="onRefresh">
+      <image class="btn-icon-sm" src="/images/ic-recycle.png" mode="aspectFit"></image>
+      <text>刷新</text>
+    </view>
+  </view>
+
+  <view class="stat-row" wx:if="{{records.length > 0}}">
+    <view class="stat-card">
+      <image class="stat-icon" src="/images/ic-ecology.png" mode="aspectFit"></image>
+      <text class="stat-num">{{records.length}}</text>
+      <text class="stat-label">总记录</text>
+    </view>
+    <view class="stat-card">
+      <image class="stat-icon" src="/images/ic-temp.png" mode="aspectFit"></image>
+      <text class="stat-num pest-num">{{pestCount}}</text>
+      <text class="stat-label">病害</text>
+    </view>
+    <view class="stat-card">
+      <image class="stat-icon" src="/images/ic-green.png" mode="aspectFit"></image>
+      <text class="stat-num healthy-num">{{healthyCount}}</text>
+      <text class="stat-label">健康</text>
+    </view>
+  </view>
+
+  <view class="sec-title" wx:if="{{records.length > 0}}">
+    <image class="sec-icon" src="/images/ic-science.png" mode="aspectFit"></image>
+    <text>识别记录</text>
+  </view>
+
+  <view class="img-list" wx:if="{{records.length > 0}}">
+    <view class="img-card" wx:for="{{records}}" wx:key="id" bindtap="onPreview" data-index="{{index}}">
+      <view class="img-wrap">
+        <image wx:if="{{item.localImg}}" class="img-thumb" src="{{item.localImg}}" mode="aspectFill"></image>
+        <image wx:elif="{{!item.imgLoading}}" class="img-thumb" src="{{item.url}}" mode="aspectFill"></image>
+        <view class="img-loading" wx:if="{{item.imgLoading}}">
+          <image class="loading-icon" src="/images/ic-eco2.png" mode="aspectFit"></image>
+          <text>加载中</text>
+        </view>
+      </view>
+      <view class="img-info">
+        <view class="img-row1">
+          <view class="cls-tag {{item.pest ? 'tag-pest' : 'tag-ok'}}">{{item.clsText}}</view>
+          <text class="conf-txt">{{item.confPercent}}%</text>
+        </view>
+        <text class="img-time">{{item.timeText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{records.length === 0 && !loading}}">
+    <image class="empty-icon" src="/images/ic-tree.png" mode="aspectFit"></image>
+    <text class="empty-main">还没有识别记录</text>
+    <text class="empty-sub">MaixCAM 拍照后会自动上传</text>
+    <view class="empty-btn" bindtap="onTriggerSnap">
+      <image class="btn-icon" src="/images/ic-science.png" mode="aspectFit"></image>
+      <text>拍一张试试</text>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-txt">
+    <image class="loading-icon" src="/images/ic-eco2.png" mode="aspectFit"></image>
+    <text>加载中…</text>
+  </view>
+  <view style="height: 30rpx;"></view>
+</scroll-view>

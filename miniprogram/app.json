@@ -1,14 +1,49 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/history/history",
+    "pages/vision/vision",
+    "pages/settings/settings"
   ],
   "window": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
-    "navigationBarBackgroundColor": "#ffffff"
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "智能温室监控",
+    "navigationBarBackgroundColor": "#2d8c3f",
+    "backgroundColor": "#f5f5f5",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#2d8c3f",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "监控",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "历史",
+        "iconPath": "images/tab-chart.png",
+        "selectedIconPath": "images/tab-chart-active.png"
+      },
+      {
+        "pagePath": "pages/vision/vision",
+        "text": "视觉",
+        "iconPath": "images/tab-camera.png",
+        "selectedIconPath": "images/tab-camera-active.png"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置",
+        "iconPath": "images/tab-settings.png",
+        "selectedIconPath": "images/tab-settings-active.png"
+      }
+    ]
   },
   "style": "v2",
-  "componentFramework": "glass-easel",
   "lazyCodeLoading": "requiredComponents"
 }

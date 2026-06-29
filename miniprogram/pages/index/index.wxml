@@ -1,27 +1,150 @@
 <!--index.wxml-->
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <view class="userinfo">
-      <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
-        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-          <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-        </button>
-        <view class="nickname-wrapper">
-          <text class="nickname-label">昵称</text>
-          <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
-        </view>
-      </block>
-      <block wx:elif="{{!hasUserInfo}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-        <view wx:else> 请使用2.10.4及以上版本基础库 </view>
-      </block>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
+<scroll-view class="page" scroll-y enhanced show-scrollbar="{{false}}"
+  refresher-enabled bindrefresherrefresh="onPullRefresh" refresher-triggered="{{refreshing}}">
+
+  <!-- 顶部 -->
+  <view class="top-bar">
+    <view class="dev-info">
+      <image class="top-icon" src="/images/ic-tree.png" mode="aspectFit"></image>
+      <text class="dev-name">{{deviceId}}</text>
+      <view class="dot {{online ? 'dot-on' : 'dot-off'}}"></view>
+      <text class="dot-txt">{{online ? '在线' : '离线'}}</text>
     </view>
-    <view class="usermotto">
-      <text class="user-motto">{{motto}}</text>
+    <text class="update-time">{{lastUpdate}}</text>
+  </view>
+
+  <!-- 传感器 -->
+  <view class="sec-title">
+    <image class="sec-icon" src="/images/ic-eco.png" mode="aspectFit"></image>
+    <text>实时数据</text>
+  </view>
+  <view class="sensor-grid">
+    <view class="s-card s-temp">
+      <image class="s-icon" src="/images/ic-temp.png" mode="aspectFit"></image>
+      <text class="s-val">{{latest.temp || '--'}}°C</text>
+      <text class="s-name">温度</text>
+      <view class="s-bar"><view class="s-bar-in s-bar-temp" style="width:{{tempPct}}%"></view></view>
+    </view>
+    <view class="s-card s-humi">
+      <image class="s-icon" src="/images/ic-humi.png" mode="aspectFit"></image>
+      <text class="s-val">{{latest.humi || '--'}}%</text>
+      <text class="s-name">湿度</text>
+      <view class="s-bar"><view class="s-bar-in s-bar-humi" style="width:{{humiPct}}%"></view></view>
+    </view>
+    <view class="s-card s-lux">
+      <image class="s-icon" src="/images/ic-solar.png" mode="aspectFit"></image>
+      <text class="s-val">{{luxTxt}}</text>
+      <text class="s-name">光照</text>
+      <view class="s-bar"><view class="s-bar-in s-bar-lux" style="width:{{luxPct}}%"></view></view>
+    </view>
+    <view class="s-card s-water">
+      <image class="s-icon" src="/images/ic-water.png" mode="aspectFit"></image>
+      <text class="s-val">{{latest.water || '--'}}%</text>
+      <text class="s-name">水位</text>
+      <view class="s-bar"><view class="s-bar-in s-bar-water" style="width:{{waterPct}}%"></view></view>
     </view>
   </view>
+
+  <!-- 空气 -->
+  <view class="air-row">
+    <image class="air-icon" src="{{latest.air === 0 ? '/images/ic-green.png' : '/images/ic-temp.png'}}" mode="aspectFit"></image>
+    <text>空气质量: {{latest.air === 0 ? '正常' : '异常'}}</text>
+  </view>
+
+  <!-- 控制 -->
+  <view class="sec-title">
+    <image class="sec-icon" src="/images/ic-gear.png" mode="aspectFit"></image>
+    <text>设备控制</text>
+    <view class="mode-tag {{mode === 'auto' ? 'm-auto' : 'm-manual'}}" bindtap="onModeTap">
+      {{mode === 'auto' ? '自动' : '手动'}}
+    </view>
+  </view>
+
+  <view class="relay-row">
+    <view class="relay-item {{relay.pump ? 'r-on' : ''}}" bindtap="onRelay" data-r="pump">
+      <image class="r-icon" src="/images/ic-water.png" mode="aspectFit"></image>
+      <text class="r-name">水泵</text>
+      <text class="r-st">{{relay.pump ? '开' : '关'}}</text>
+      <view class="sw {{relay.pump ? 'sw-on' : ''}}"><view class="sw-dot {{relay.pump ? 'sw-dot-on' : ''}}"></view></view>
+    </view>
+    <view class="relay-item {{relay.light ? 'r-on' : ''}}" bindtap="onRelay" data-r="light">
+      <image class="r-icon" src="/images/ic-bulb.png" mode="aspectFit"></image>
+      <text class="r-name">补光</text>
+      <text class="r-st">{{relay.light ? '开' : '关'}}</text>
+      <view class="sw {{relay.light ? 'sw-on' : ''}}"><view class="sw-dot {{relay.light ? 'sw-dot-on' : ''}}"></view></view>
+    </view>
+    <view class="relay-item {{relay.fan ? 'r-on' : ''}}" bindtap="onRelay" data-r="fan">
+      <image class="r-icon" src="/images/ic-fan.png" mode="aspectFit"></image>
+      <text class="r-name">风扇</text>
+      <text class="r-st">{{relay.fan ? '开' : '关'}}</text>
+      <view class="sw {{relay.fan ? 'sw-on' : ''}}"><view class="sw-dot {{relay.fan ? 'sw-dot-on' : ''}}"></view></view>
+    </view>
+  </view>
+
+  <!-- 快捷 -->
+  <view class="sec-title">
+    <image class="sec-icon" src="/images/ic-plug.png" mode="aspectFit"></image>
+    <text>快捷操作</text>
+  </view>
+  <view class="quick-row">
+    <view class="q-btn" bindtap="doSnap">
+      <image class="q-icon" src="/images/ic-science.png" mode="aspectFit"></image>
+      <text>拍照</text>
+    </view>
+    <view class="q-btn" bindtap="doAllOff">
+      <image class="q-icon" src="/images/ic-recycle.png" mode="aspectFit"></image>
+      <text>全关</text>
+    </view>
+    <view class="q-btn" bindtap="doAuto">
+      <image class="q-icon" src="/images/ic-eco2.png" mode="aspectFit"></image>
+      <text>自动</text>
+    </view>
+    <view class="q-btn" bindtap="doManual">
+      <image class="q-icon" src="/images/ic-energy.png" mode="aspectFit"></image>
+      <text>手动</text>
+    </view>
+  </view>
+
+  <!-- 最新识别 -->
+  <block wx:if="{{vision}}">
+    <view class="sec-title">
+      <image class="sec-icon" src="/images/ic-science.png" mode="aspectFit"></image>
+      <text>最新识别</text>
+    </view>
+    <view class="vis-card" bindtap="goVision">
+      <view class="vis-img-wrap">
+        <image wx:if="{{vision.localImg}}" class="vis-img" src="{{vision.localImg}}" mode="aspectFill"></image>
+        <image wx:elif="{{vision.url}}" class="vis-img" src="{{vision.url}}" mode="aspectFill"></image>
+        <view class="vis-img-ph" wx:if="{{!vision.url && !vision.localImg}}">
+          <image class="ph-icon" src="/images/ic-science.png" mode="aspectFit"></image>
+        </view>
+      </view>
+      <view class="vis-info">
+        <view class="vis-tag {{vision.pest ? 'vt-pest' : 'vt-ok'}}">{{vision.clsText}}</view>
+        <text class="vis-conf">{{vision.confPercent}}%</text>
+        <text class="vis-time">{{vision.timeText}}</text>
+      </view>
+      <text class="vis-arrow">›</text>
+    </view>
+  </block>
+
+  <!-- 节点 -->
+  <block wx:if="{{latest.nodes}}">
+    <view class="sec-title">
+      <image class="sec-icon" src="/images/ic-station.png" mode="aspectFit"></image>
+      <text>节点状态</text>
+    </view>
+    <view class="node-row">
+      <view class="node-item">
+        <view class="nd {{latest.nodes.n1 ? 'nd-on' : ''}}"></view>
+        <text>节点1 {{latest.nodes.n1 ? '在线' : '离线'}}</text>
+      </view>
+      <view class="node-item" wx:if="{{latest.nodes.n2 !== undefined}}">
+        <view class="nd {{latest.nodes.n2 ? 'nd-on' : ''}}"></view>
+        <text>节点2 {{latest.nodes.n2 ? '在线' : '离线'}}</text>
+      </view>
+    </view>
+  </block>
+
+  <view style="height: 30rpx;"></view>
 </scroll-view>

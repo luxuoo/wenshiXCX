@@ -1,0 +1,51 @@
+/* settings.wxss */
+.page { height: 100vh; background: #f0f4f0; }
+
+.sec-title { display: flex; align-items: center; gap: 8rpx; padding: 24rpx 28rpx 10rpx; font-size: 28rpx; font-weight: 600; color: #333; }
+.sec-icon { width: 32rpx; height: 32rpx; }
+.hint { font-size: 22rpx; color: #aaa; font-weight: 400; margin-left: 6rpx; }
+
+.card { margin: 0 22rpx; background: #fff; border-radius: 18rpx; overflow: hidden; box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.04); }
+
+.row { display: flex; align-items: center; justify-content: space-between; padding: 24rpx; border-bottom: 1rpx solid #f5f5f5; }
+.row:last-child { border-bottom: none; }
+.lbl-wrap { display: flex; align-items: center; gap: 10rpx; }
+.lbl-icon { width: 32rpx; height: 32rpx; }
+.lbl { font-size: 28rpx; color: #333; }
+.val { font-size: 26rpx; color: #888; }
+.inp { flex: 1; text-align: right; font-size: 28rpx; color: #333; }
+
+.ctrl { display: flex; align-items: center; gap: 14rpx; }
+.cbtn {
+  width: 52rpx; height: 52rpx; display: flex; align-items: center; justify-content: center;
+  background: #f0f0f0; border-radius: 50%; font-size: 30rpx; color: #555; font-weight: 700;
+}
+.cbtn:active { background: #e0e0e0; }
+.cval { font-size: 28rpx; font-weight: 600; color: #2d8c3f; min-width: 110rpx; text-align: center; }
+
+.save-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10rpx;
+  margin: 20rpx 22rpx; padding: 24rpx; background: #2d8c3f; color: #fff;
+  border-radius: 18rpx; font-size: 30rpx; font-weight: 600;
+}
+.save-btn .btn-icon { width: 36rpx; height: 36rpx; }
+.save-btn:active { opacity: 0.85; }
+
+.mode-card { display: flex; gap: 14rpx; padding: 18rpx 20rpx; }
+.mode-opt { flex: 1; padding: 20rpx 16rpx; border-radius: 14rpx; border: 2rpx solid #e0e0e0; text-align: center; }
+.mode-sel { border-color: #2d8c3f; background: #e8f5e9; }
+.mode-icon { width: 52rpx; height: 52rpx; display: block; margin: 0 auto 6rpx; }
+.mode-name { font-size: 28rpx; font-weight: 600; color: #333; display: block; }
+.mode-desc { font-size: 22rpx; color: #999; display: block; margin-top: 4rpx; }
+
+.act-row { display: flex; align-items: center; gap: 14rpx; padding: 24rpx; border-bottom: 1rpx solid #f5f5f5; }
+.act-row:last-child { border-bottom: none; }
+.act-icon { width: 32rpx; height: 32rpx; }
+.act-txt { flex: 1; font-size: 28rpx; color: #333; }
+.arr { font-size: 34rpx; color: #ccc; }
+
+.footer {
+  display: flex; align-items: center; justify-content: center; gap: 10rpx;
+  padding: 40rpx 0 10rpx; font-size: 24rpx; color: #bbb;
+}
+.footer-icon { width: 28rpx; height: 28rpx; opacity: 0.5; }

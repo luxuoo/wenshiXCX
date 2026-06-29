@@ -1,0 +1,70 @@
+/* vision.wxss */
+.page { height: 100vh; background: #f0f4f0; }
+
+.action-bar { display: flex; gap: 14rpx; padding: 22rpx 26rpx; }
+.snap-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 10rpx;
+  padding: 22rpx; background: #2d8c3f; color: #fff; border-radius: 16rpx;
+  font-size: 28rpx; font-weight: 600;
+}
+.snap-btn:active { opacity: 0.85; }
+.btn-icon { width: 36rpx; height: 36rpx; }
+.btn-icon-sm { width: 30rpx; height: 30rpx; }
+.refresh-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8rpx;
+  padding: 22rpx 26rpx; background: #fff; border-radius: 16rpx;
+  font-size: 26rpx; color: #555; box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+}
+
+.stat-row { display: flex; gap: 12rpx; padding: 0 26rpx 12rpx; }
+.stat-card {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  padding: 16rpx 8rpx; background: #fff; border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+}
+.stat-icon { width: 32rpx; height: 32rpx; margin-bottom: 4rpx; }
+.stat-num { display: block; font-size: 36rpx; font-weight: 700; color: #2d8c3f; }
+.pest-num { color: #c62828; }
+.healthy-num { color: #4caf50; }
+.stat-label { display: block; font-size: 22rpx; color: #999; }
+
+.sec-title { display: flex; align-items: center; gap: 8rpx; padding: 20rpx 26rpx 8rpx; font-size: 28rpx; font-weight: 600; color: #333; }
+.sec-icon { width: 32rpx; height: 32rpx; }
+
+.img-list { padding: 0 26rpx; }
+.img-card {
+  background: #fff; border-radius: 16rpx; overflow: hidden;
+  margin-bottom: 18rpx; box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+}
+.img-wrap { position: relative; width: 100%; height: 360rpx; background: #f5f5f5; }
+.img-thumb { width: 100%; height: 100%; }
+.img-loading {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: #fafafa; gap: 10rpx;
+}
+.loading-icon { width: 48rpx; height: 48rpx; opacity: 0.5; animation: spin 2s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.img-info { padding: 16rpx 20rpx; }
+.img-row1 { display: flex; align-items: center; justify-content: space-between; }
+.cls-tag { font-size: 24rpx; font-weight: 600; padding: 3rpx 14rpx; border-radius: 6rpx; }
+.tag-ok { background: #e8f5e9; color: #2d8c3f; }
+.tag-pest { background: #fce4ec; color: #c62828; }
+.conf-txt { font-size: 24rpx; color: #888; }
+.img-time { font-size: 22rpx; color: #bbb; margin-top: 4rpx; display: block; }
+
+.empty { display: flex; flex-direction: column; align-items: center; padding: 90rpx 60rpx; }
+.empty-icon { width: 100rpx; height: 100rpx; opacity: 0.4; margin-bottom: 20rpx; }
+.empty-main { font-size: 28rpx; color: #555; font-weight: 600; }
+.empty-sub { font-size: 24rpx; color: #aaa; margin-top: 8rpx; }
+.empty-btn {
+  display: flex; align-items: center; gap: 10rpx;
+  margin-top: 36rpx; padding: 20rpx 46rpx; background: #2d8c3f;
+  color: #fff; border-radius: 32rpx; font-size: 28rpx; font-weight: 600;
+}
+
+.loading-txt {
+  display: flex; align-items: center; justify-content: center; gap: 12rpx;
+  padding: 40rpx; color: #999; font-size: 26rpx;
+}
